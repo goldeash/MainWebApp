@@ -25,8 +25,14 @@ namespace UserManagementApp.Controllers
         public async Task<IActionResult> Login(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user != null && user.IsActive)
+            if (user != null)
             {
+                if (!user.IsActive)
+                {
+                    ViewBag.Error = "Your account has been blocked.";
+                    return View();
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
                 if (result.Succeeded)
                 {
