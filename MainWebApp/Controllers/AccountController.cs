@@ -25,7 +25,7 @@ namespace UserManagementApp.Controllers
         public async Task<IActionResult> Login(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user != null)
+            if (user != null)   
             {
                 if (!user.IsActive)
                 {
